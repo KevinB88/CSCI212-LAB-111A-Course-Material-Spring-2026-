@@ -31,7 +31,7 @@ public class Main {
 		// - using a setter method. Let's use the setter method to update a student's name. 
 		
 		System.out.println("Student 3's name before update: " + s3.getName()); 
-		String s3UpdatedName = "Ferris Beuller"; 
+		String s3UpdatedName = "Ferris Bueller"; 
 		s3.setName(s3UpdatedName);
 		System.out.println("Student 3's name after update: " + s3.getName()); 
 		
