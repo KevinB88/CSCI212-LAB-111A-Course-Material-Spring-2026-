@@ -1,4 +1,4 @@
-package Lab1; 
+package lab1; 
 
 /*	CSCI212 (111A) Lab #1 : Student Gradebook 
  *  Full name: 
@@ -10,14 +10,21 @@ public class StudentGradeBook {
 
 	
 	// Step 5: Declare private attributes. 
+	private String firstName;
+	private String lastName; 
+	private int[] grades; 
 	
 	// Step 5.
 
 	
 	// Step 6 : Update the constructor. 
-	public StudentGradeBook() {
+	public StudentGradeBook(String firstName, String lastName) {
 		// Assign the name attributes using the 'this' keyword 
 		// Allocate an integer array of size 5 for grades 
+		this.firstName = reformatName(firstName); 
+		this.lastName = reformatName(lastName); 
+		this.grades = new int[5]; 
+		// By default this will be: {0,0,0,0,0}
 	}
 	// Step 6. 
 	
@@ -35,20 +42,31 @@ public class StudentGradeBook {
 	
 	
 	//Step 7: Implement the getter and setter for the student's full name.
-	public String getStudentFullName() { return ""; }
+	public String getStudentFullName() { 
+		return this.firstName + " " + this.lastName; 
+	}
 	
-	public void setStudentFullName() {}
+	public void setStudentFullName(String firstName, String lastName) {
+		this.firstName = reformatName(firstName); 
+		this.lastName = reformatName(lastName); 
+	}
 	//Step 7.  
 	
 	
 	
 	// Step 8: Implement reformatName() 
-	private String reformatName() { 
-	
+	private String reformatName(String name) { 
+		
 		//Takes a String
 		//Returns the same string with the first letter capitalized 
 		
-		return ""; 
+		/*	step 1. obtain the first letter of the String name
+		 * 	step 2. use toUpperCase() on this first letter 
+		 *  step 3. remove the first letter of the original String name
+		 * 	step 4. append the upper case letter to the previous string
+		 */
+		
+		return name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
 	//Step 8. 
 	
