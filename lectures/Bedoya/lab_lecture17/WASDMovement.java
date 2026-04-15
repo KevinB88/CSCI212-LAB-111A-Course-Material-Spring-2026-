@@ -39,13 +39,20 @@ class GamePanel extends JPanel{
 	
 	
 	public GamePanel() {
-		setBackground(Color.WHITE); 
-		setFocusable(true); 
+	    setBackground(Color.WHITE);
+	    setFocusable(true);
+	    setupKeyBindings();
 
-		generateTriangles(6); 
-		setupKeyBindings(); 
+	    addComponentListener(new java.awt.event.ComponentAdapter() {
+	        @Override
+	        public void componentResized(java.awt.event.ComponentEvent e) {
+	            if (triangles.isEmpty()) {
+	                generateTriangles(6);
+	            }
+	        }
+	    });
 	}
-	
+
 	
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -71,12 +78,14 @@ class GamePanel extends JPanel{
 	    int w = getWidth();
 	    int h = getHeight();
 
-	    for (int i = 0; i < count; i++) {
-	        int baseX = rand.nextInt(Math.max(1, w - 40));
-	        int baseY = rand.nextInt(Math.max(1, h - 40));
+	    int size = 30;
 
-	        int[] xs = {baseX, baseX + 30, baseX + 15};
-	        int[] ys = {baseY, baseY + 30, baseY - 30};
+	    for (int i = 0; i < count; i++) {
+	        int baseX = rand.nextInt(w - size);
+	        int baseY = rand.nextInt(h - size);
+
+	        int[] xs = {baseX, baseX + size, baseX + size / 2};
+	        int[] ys = {baseY + size, baseY + size, baseY};
 
 	        triangles.add(new Polygon(xs, ys, 3));
 	    }
@@ -105,6 +114,8 @@ class GamePanel extends JPanel{
 		im.put(KeyStroke.getKeyStroke("W"), "up");
 		am.put("up", new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
+				if(gameOver) return;
+				
 				y = Math.max(0, y - STEP);
 				checkCollision(); 
 				// update/repaint the frame 
@@ -116,6 +127,8 @@ class GamePanel extends JPanel{
 		im.put(KeyStroke.getKeyStroke("S"), "down");
 		am.put("down", new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
+				if(gameOver) return;
+				
 				y = Math.min(getHeight() - SIZE, y + STEP); 
 				checkCollision(); 
 				// update/repaint the frame 
@@ -127,6 +140,8 @@ class GamePanel extends JPanel{
 		im.put(KeyStroke.getKeyStroke("A"), "left");
 		am.put("left", new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
+				if(gameOver) return;
+				
 				x = Math.max(0, x - STEP); 
 				checkCollision(); 
 				// update/repaint the frame 
@@ -138,6 +153,8 @@ class GamePanel extends JPanel{
 		im.put(KeyStroke.getKeyStroke("D"), "right");
 		am.put("right", new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
+				if(gameOver) return;
+				
 				x = Math.min(getWidth() - SIZE, x + STEP);
 				checkCollision(); 
 				// update/repaint the frame 
